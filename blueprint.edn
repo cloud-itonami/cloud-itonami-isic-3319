@@ -1,0 +1,64 @@
+{:itonami.blueprint/id "cloud-itonami-isic-3319"
+ :itonami.blueprint/name "Repair of Other Equipment"
+ :itonami.blueprint/isic-rev5 "3319"
+ :itonami.blueprint/domain :manufacturing/other-equipment-repair
+ :itonami.blueprint/license "AGPL-3.0-or-later"
+ :itonami.blueprint/social-impact [:worker-safety :repair-access :circular-economy-repair-over-replace]
+ :itonami.blueprint/governor :other-equipment-repair-governor
+ :itonami.blueprint/robotics false
+ :itonami.blueprint/required-technologies [:identity :forms :audit-ledger]
+ :itonami.blueprint/optional-technologies []
+ :itonami.blueprint/status :public-oss
+ :itonami.blueprint/maturity :implemented
+ :itonami.blueprint/implemented-slice
+ "`:other-equipment-repair-governor` is implemented end-to-end in
+ `src/other_equipment_repair` as a REPAIR-SHOP OPERATIONS COORDINATION
+ actor -- Repair Advisor (LLM proposal-only) ⊣ Repair Governor (closed-
+ op-allowlist / equipment-verification / legal-basis / unresolved-concern
+ hard-gates). ISIC 3319 is the RESIDUAL repair-services class -- repair
+ of miscellaneous equipment not covered by the more specific repair
+ classes 3311 (fabricated metal products), 3312 (machinery and
+ equipment), 3313 (electronic and optical equipment), 3314 (electrical
+ equipment) or 3315 (transport equipment). This actor deliberately holds
+ NO repair-equipment/diagnostic-tool control authority and NO
+ return-to-service sign-off authority (both are HARD, permanent governor
+ blocks, never overridable by human approval -- see
+ `other-equipment-repair.governor` ns docstring), the SAME coordination-
+ only, narrower-than-4211 shape `cloud-itonami-isic-3320` (Installation
+ of Industrial Machinery and Equipment) already established in this
+ fleet. Every one of its four proposal ops (`:log-repair-record` /
+ `:schedule-repair-operation` / `:flag-safety-concern` / `:order-
+ supplies`) carries `:effect :propose` ONLY -- the governor HARD-holds
+ any proposal that doesn't (`effect-not-propose-violations`), a
+ structural invariant distinguishing this actor from siblings that DO
+ commit real-world actuation effects.
+
+ UNLIKE `cloud-itonami-isic-3320` (whose `:schedule-installation-
+ operation` ALWAYS escalates to a human, at every phase, because it
+ coordinates potential heavy-lift/rigging-equipment dispatch), THIS
+ actor's `:schedule-repair-operation` MAY auto-commit at phase 3 when the
+ governor is clean -- repair-of-other-equipment is the ISIC-residual,
+ lower-average-physical-risk class (furniture, sporting/recreational
+ goods, musical instruments, miscellaneous equipment n.e.c.), and only
+ `:flag-safety-concern` is a permanent, unconditional `high-stakes`
+ member in `other-equipment-repair.governor`. This is a deliberate,
+ narrower escalation surface than 3320's, not an oversight -- see
+ `other-equipment-repair.phase` ns docstring 'Actuation' section.
+
+ Per-jurisdiction (JPN/USA/DEU) pre-repair hazard/energy-control
+ legal-basis catalog (`other-equipment-repair.facts`) with real official
+ sources -- all THREE seeded jurisdictions are honestly `:qualitative`
+ here (a procedural stop-machine/lockout-tagout/qualified-personnel duty
+ before cleaning, inspection or repair work, not a fixed numeric
+ notice-lead-time), unlike `cloud-itonami-isic-3320`'s catalog, which
+ found ONE `:quantitative` jurisdiction (JPN) for a DIFFERENT proposal
+ type (an installation-notification PLAN filing) -- this actor does not
+ invent a lead-time count where none of its three researched
+ jurisdictions' repair/maintenance safety law gives one for repair work
+ itself. This build ships NO JVM-only interop anywhere in `src/` (no
+ real Resend/Twilio transports -- `other-equipment-repair.notify` ships
+ only the portable mock notifier + `Notifier` protocol seam) per this
+ workspace's cljs-first `.cljc` runtime-priority rule. `:flag-safety-
+ concern` ALWAYS escalates to a human, at every phase, unconditionally.
+ See `docs/` -- README `Actuation` section -- for the full governor-check
+ enumeration and the rationale for each hard/soft rule."}

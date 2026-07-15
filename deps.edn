@@ -1,0 +1,43 @@
+{:paths ["src"]
+ ;; langgraph-clj brings langchain-clj transitively (both zero-/single-dep,
+ ;; all .cljc -> portable to JVM / SCI / ClojureScript / GraalVM). It lives
+ ;; in the kotoba-lang org of this workspace. This repo is standalone
+ ;; (forkable outside the workspace); the :local/root paths only resolve
+ ;; inside the monorepo checkout -- a standalone fork should override them
+ ;; with git coordinates. `other-equipment-repair.store` uses
+ ;; `langchain-store.core` for the shared EDN-blob codec / identity-schema /
+ ;; entity field-spec machinery (ADR-2607141600) instead of hand-rolling
+ ;; it. This actor is COORDINATION-ONLY (every proposal effect is
+ ;; `:propose`) -- it deliberately has NO dependency on
+ ;; `kotoba-lang/robotics` or `kotoba-lang/physics-2d`: it never operates
+ ;; repair equipment/diagnostic tools or signs off on return-to-service,
+ ;; only proposes, schedules, flags and logs, all governor- and
+ ;; human-gated (see README). This build also deliberately ships NO
+ ;; JVM-only interop anywhere in `src/` (no `java.net.http`, no real
+ ;; Resend/Twilio transports in `other-equipment-repair.notify` -- only
+ ;; the portable mock notifier) per this workspace's cljs-first `.cljc`
+ ;; runtime-priority rule (CLAUDE.md `.cljc`/`.kotoba` runtime priority
+ ;; section) -- a real transport can be added later via a portable
+ ;; (cljs/nbb) HTTP client without touching this namespace's protocol
+ ;; shape.
+ :deps {io.github.com-junkawasaki/langgraph-clj
+        {:local/root "../../kotoba-lang/langgraph"}
+        io.github.kotoba-lang/langchain-store
+        {:local/root "../../kotoba-lang/langchain-store"}}
+ :aliases
+ {;; offline workspace dev -- pin transitive langchain-clj to local checkout
+  :dev {:override-deps
+        {io.github.com-junkawasaki/langchain-clj
+         {:local/root "../../kotoba-lang/langchain"}}}
+  ;; clojure -M:dev:run  -> drive the demo through one OperationActor
+  :run {:main-opts ["-m" "other-equipment-repair.sim"]}
+  :test {:extra-paths ["test"]
+         :extra-deps {io.github.cognitect-labs/test-runner
+                      {:git/tag "v0.5.1" :git/sha "dfb30dd"}}
+         :main-opts ["-m" "cognitect.test-runner"]
+         :exec-fn cognitect.test-runner.api/test}
+  ;; static analysis -- clj-kondo from deps (no binary), errors fail CI.
+  :lint {:replace-deps {clj-kondo/clj-kondo {:mvn/version "2024.11.14"}}
+         :main-opts    ["-m" "clj-kondo.main"
+                        "--lint" "src" "test"
+                        "--fail-level" "error"]}}}
