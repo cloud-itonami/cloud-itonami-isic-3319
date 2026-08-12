@@ -20,10 +20,18 @@
  ;; section) -- a real transport can be added later via a portable
  ;; (cljs/nbb) HTTP client without touching this namespace's protocol
  ;; shape.
+ ;; `jp-go-digital-design-system` (デジタル庁デザインシステム, DADS) is this
+ ;; workspace's BASE design system (CLAUDE.md "UI/UX 標準"). It is consumed as
+ ;; a :git/sha, NOT a :local/root, so a standalone fork outside the monorepo
+ ;; still resolves it. Only `other-equipment-repair.render-html` uses it, and
+ ;; only at build time -- nothing in the actor path depends on it.
  :deps {io.github.com-junkawasaki/langgraph-clj
         {:local/root "../../kotoba-lang/langgraph"}
         io.github.kotoba-lang/langchain-store
-        {:local/root "../../kotoba-lang/langchain-store"}}
+        {:local/root "../../kotoba-lang/langchain-store"}
+        io.github.kotoba-lang/jp-go-digital-design-system
+        {:git/url "https://github.com/kotoba-lang/jp-go-digital-design-system"
+         :git/sha "83db99546eabc53613ae826ea41d1533a3c574af"}}
  :aliases
  {;; offline workspace dev -- pin transitive langchain-clj to local checkout
   :dev {:override-deps
@@ -31,6 +39,13 @@
          {:local/root "../../kotoba-lang/langchain"}}}
   ;; clojure -M:dev:run  -> drive the demo through one OperationActor
   :run {:main-opts ["-m" "other-equipment-repair.sim"]}
+  ;; clojure -M:dev:render-html [out-file] -> regenerate
+  ;; docs/samples/operator-console.html by ACTUALLY RUNNING the compiled
+  ;; OperationActor StateGraph over a freshly seeded store (flagship
+  ;; checklist item 2). Refuses to write the page if the run produced zero
+  ;; HARD governor holds -- see the ns docstring. Deterministic: two runs
+  ;; are byte-identical.
+  :render-html {:main-opts ["-m" "other-equipment-repair.render-html"]}
   :test {:extra-paths ["test"]
          :extra-deps {io.github.cognitect-labs/test-runner
                       {:git/tag "v0.5.1" :git/sha "dfb30dd"}}
