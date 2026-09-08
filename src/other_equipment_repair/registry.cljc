@@ -24,7 +24,7 @@
   it never builds, and this actor never proposes, a record that commands
   repair equipment/diagnostic tools or signs off on return-to-service
   (see `other-equipment-repair.governor` ns docstring)."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [other-equipment-repair.facts :as facts]))
 
 (defn- zero-pad [n w]
@@ -50,7 +50,7 @@
   may commit against it."
   [equipment-id jurisdiction sequence]
   (assert-record-fields! "repair-record" equipment-id jurisdiction sequence)
-  (let [record-id (str (str/upper-case jurisdiction) "-RPR-" (zero-pad sequence 6))]
+  (let [record-id (str (str/upper jurisdiction) "-RPR-" (zero-pad sequence 6))]
     {"record" {"record_id" record-id "kind" "repair-record-log-entry"
                "equipment_id" equipment-id "jurisdiction" jurisdiction "immutable" true}
      "repair_record_number" record-id}))
@@ -68,7 +68,7 @@
   allowed to commit."
   [equipment-id jurisdiction sequence]
   (assert-record-fields! "schedule-proposal" equipment-id jurisdiction sequence)
-  (let [record-id (str (str/upper-case jurisdiction) "-SCH-" (zero-pad sequence 6))]
+  (let [record-id (str (str/upper jurisdiction) "-SCH-" (zero-pad sequence 6))]
     {"record" {"record_id" record-id "kind" "schedule-proposal-draft"
                "equipment_id" equipment-id "jurisdiction" jurisdiction "immutable" true}
      "schedule_number" record-id}))
@@ -82,7 +82,7 @@
   committed after a human has reviewed it."
   [equipment-id jurisdiction sequence]
   (assert-record-fields! "safety-concern-flag" equipment-id jurisdiction sequence)
-  (let [record-id (str (str/upper-case jurisdiction) "-SCF-" (zero-pad sequence 6))]
+  (let [record-id (str (str/upper jurisdiction) "-SCF-" (zero-pad sequence 6))]
     {"record" {"record_id" record-id "kind" "safety-concern-flag-draft"
                "equipment_id" equipment-id "jurisdiction" jurisdiction "immutable" true}
      "concern_number" record-id}))
@@ -95,7 +95,7 @@
   human (see `other-equipment-repair.governor`)."
   [equipment-id jurisdiction sequence]
   (assert-record-fields! "supply-order-proposal" equipment-id jurisdiction sequence)
-  (let [record-id (str (str/upper-case jurisdiction) "-SUP-" (zero-pad sequence 6))]
+  (let [record-id (str (str/upper jurisdiction) "-SUP-" (zero-pad sequence 6))]
     {"record" {"record_id" record-id "kind" "supply-order-proposal-draft"
                "equipment_id" equipment-id "jurisdiction" jurisdiction "immutable" true}
      "order_number" record-id}))
