@@ -144,9 +144,9 @@ later behind the same protocol via a portable HTTP client without
 changing this actor's shape.
 
 ```bash
-clojure -M:dev:run    # demo: full coordination episode + every HARD hold
-clojure -M:dev:test   # test suite
-clojure -M:lint       # clj-kondo, errors fail
+kbb -M:dev:run    # demo: full coordination episode + every HARD hold
+kbb -M:dev:test   # test suite
+kbb -M:lint       # clj-kondo, errors fail
 ```
 
 ## License

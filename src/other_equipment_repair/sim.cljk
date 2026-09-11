@@ -1,5 +1,5 @@
 (ns other-equipment-repair.sim
-  "Demo driver -- `clojure -M:dev:run`. Walks equipment/work-orders
+  "Demo driver -- `kbb -M:dev:run`. Walks equipment/work-orders
   through a full coordination episode, exercising every governor check:
   log a repair record (auto-commits) -> propose a repair-operation
   schedule (governor-clean, equipment-verified, AUTO-COMMITS at phase 3)
