@@ -78,7 +78,7 @@
   NO generated id, and two consecutive runs are byte-identical (verified
   with `cmp`).
 
-  Usage: `clojure -M:dev:render-html [out-file]`
+  Usage: `kbb -M:dev:render-html [out-file]`
   (default `docs/samples/operator-console.html`)."
   (:require [kotoba.lang.text :as str]
             [jp-go-dds.skin]
@@ -601,7 +601,7 @@
      "<span class=\"badge\">governor-gated</span> "
      "<span class=\"badge\">coordination-only &middot; every effect is :propose</span></p>\n"
      "<p class=\"subtitle\">Generated at build time by <code>other-equipment-repair.render-html</code> "
-     "(<code>clojure -M:dev:render-html</code>) by actually running the compiled "
+     "(<code>kbb -M:dev:render-html</code>) by actually running the compiled "
      "<code>other-equipment-repair.operation</code> StateGraph over a freshly seeded store. "
      "Every value below was read back out of that run &mdash; there is no mock markup on this page, "
      "and no timestamp, so successive regenerations are byte-identical.</p>\n"
@@ -743,7 +743,7 @@
      "  technician. Every proposal carries <code>:effect :propose</code>; committing one means a\n"
      "  coordination artifact was logged, never that a tool was operated or that a piece of equipment\n"
      "  was authorized to return to service.</p>\n"
-     "  <p>Regenerate: <code>clojure -M:dev:render-html</code></p>\n"
+     "  <p>Regenerate: <code>kbb -M:dev:render-html</code></p>\n"
      "</footer>\n"
      "</body></html>\n")))
 

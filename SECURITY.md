@@ -42,7 +42,7 @@ Include:
 
 - Keep real equipment/work-order/customer/personal data outside this
   repository.
-- Run the full test suite (`clojure -M:dev:test`) before deployment.
+- Run the full test suite (`kbb -M:dev:test`) before deployment.
 - Export and review audit logs regularly.
 - Use least privilege for operators and service accounts.
 - Never deploy a fork that has relaxed the Repair Governor's closed
