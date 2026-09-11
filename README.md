@@ -84,7 +84,7 @@ repair-shop diagnostic/repair/testing coordination as described above.
 | `:flag-safety-concern` | surface an equipment-hazard / incomplete-repair / certification-lapse concern | Drafts a safety-concern flag; ALWAYS escalates to a human, unconditionally. Once approved, `other-equipment-repair.notify` sends the notice (mail + phone, mock only -- see `Actuation`) to the equipment/work-order's repair-technician/shop-safety-officer contact roster. |
 | `:order-supplies` | replacement-parts procurement proposal | Drafts a supply-order proposal. Escalates above a cost threshold or below the confidence floor; may auto-commit at phase 3 otherwise. |
 
-**Legal basis is data, not code** -- `src/other_equipment_repair/facts.cljc`'s
+**Legal basis is data, not code** -- `src/other_equipment_repair/facts.cljk`'s
 `catalog` is the per-jurisdiction EDN source-of-truth the governor checks
 every `:schedule-repair-operation` proposal against (JPN/USA/DEU seeded,
 the same honest-coverage convention `installation.facts`/`demolition.
