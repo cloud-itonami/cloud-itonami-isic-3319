@@ -1,5 +1,5 @@
 (ns other-equipment-repair.registry-test
-  (:require [clojure.test :refer [deftest is]]
+  (:require [kotoba.test :refer [deftest is]]
             [other-equipment-repair.registry :as r]))
 
 ;; ----------------------------- register-repair-record -----------------------------

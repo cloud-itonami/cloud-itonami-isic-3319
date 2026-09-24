@@ -7,7 +7,7 @@
   note this actor's `:schedule-repair-operation` auto-eligibility is a
   deliberate DIFFERENCE from `cloud-itonami-isic-3320`'s `:schedule-
   installation-operation` (which is never auto-eligible)."
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [other-equipment-repair.phase :as phase]))
 
 (deftest flag-safety-concern-never-auto-at-any-phase
