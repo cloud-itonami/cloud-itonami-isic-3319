@@ -19,7 +19,7 @@
   (some of which also ship real `java.net.http`-backed Resend/Twilio
   transports guarded by `#?(:clj ...)`), this repo deliberately ships NO
   JVM-only interop anywhere in `src/` -- see this workspace's cljs-first
-  `.cljc` runtime-priority rule (CLAUDE.md `.cljc`/`.kotoba` runtime
+  `.cljc` runtime-priority rule (AGENTS.md `.cljc`/`.kotoba` runtime
   priority section: `kotoba wasm` > `clojurewasm` > `ClojureScript` >
   `nbb`, JVM/`bb` downgraded to a last resort) and this build's explicit
   no-JVM-interop mandate. A real transport (Resend mail / Twilio voice,

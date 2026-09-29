@@ -16,12 +16,12 @@
  ;; JVM-only interop anywhere in `src/` (no `java.net.http`, no real
  ;; Resend/Twilio transports in `other-equipment-repair.notify` -- only
  ;; the portable mock notifier) per this workspace's cljs-first `.cljc`
- ;; runtime-priority rule (CLAUDE.md `.cljc`/`.kotoba` runtime priority
+ ;; runtime-priority rule (AGENTS.md `.cljc`/`.kotoba` runtime priority
  ;; section) -- a real transport can be added later via a portable
  ;; (cljs/nbb) HTTP client without touching this namespace's protocol
  ;; shape.
  ;; `jp-go-digital-design-system` (デジタル庁デザインシステム, DADS) is this
- ;; workspace's BASE design system (CLAUDE.md "UI/UX 標準"). It is consumed as
+ ;; workspace's BASE design system (AGENTS.md "UI/UX 標準"). It is consumed as
  ;; a :git/sha, NOT a :local/root, so a standalone fork outside the monorepo
  ;; still resolves it. Only `other-equipment-repair.render-html` uses it, and
  ;; only at build time -- nothing in the actor path depends on it.
